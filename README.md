@@ -14,7 +14,7 @@ cursor_x: initial cursor position on the x axis
 cursor_y: initial cursor position on the y axis  
 divider: value used to regulate the cursor's speed. A small value means a fast cursor (100 is a good value).  
 
-return 0 on success, -1 on error.
+returns 0 on success, -1 on error.
 <br><br>
 ```C
 void psp_jmouse_quit()
