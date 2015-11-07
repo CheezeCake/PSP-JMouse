@@ -24,4 +24,4 @@ Closes the opened joystick.
 ```C
 void psp_jmouse_update(const SDL_Event* event)
 ```
-Processes the event. You should get the event with SDL_PollEvent using SDL_WaitEvent won't work properly.
+Processes the event. You should get the event with SDL_PollEvent, using SDL_WaitEvent won't work properly.

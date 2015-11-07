@@ -12,7 +12,7 @@ static float cursor_position[2] = {0};
 static float axes_values[2] = {0};
 static SDL_Joystick* joystick = NULL;
 static Uint16 value_divider = 1;
-int screen_width = 0, screen_height = 0;
+static int screen_size[2] = {0};
 static Uint32 time;
 static unsigned int frame_cnt = 0;
 static unsigned int fps = 0;
@@ -26,8 +26,8 @@ int psp_jmouse_init(int width, int height, Uint16 cursor_x, Uint16 cursor_y, Uin
 	if (!joystick || SDL_JoystickNumAxes(joystick) != 2)
 		return -1;
 
-	screen_width = width;
-	screen_height = height;
+	screen_size[X] = width;
+	screen_size[Y] = height;
 	value_divider = divider;
 
 	cursor_position[X] = MIN(cursor_x, width);
@@ -56,20 +56,16 @@ void psp_jmouse_update(const SDL_Event* event)
 			axes_values[event->jaxis.axis] = 0;
 	}
 
-	for (i = 0; i < 2; i++)
+	for (i = 0; i < 2; i++) {
 		cursor_position[i] += axes_values[i] / (fps + 1);
 
-	if (cursor_position[X] < 0)
-		cursor_position[X] = 0;
-	else if (cursor_position[X] > screen_width)
-		cursor_position[X] = screen_width;
+		if (cursor_position[i] < 0)
+			cursor_position[i] = 0;
+		else if (cursor_position[i] > screen_size[i])
+			cursor_position[i] = screen_size[i];
+	}
 
-	if (cursor_position[Y] < 0)
-		cursor_position[Y] = 0;
-	else if (cursor_position[Y] > screen_height)
-		cursor_position[Y] = screen_height;
-
-	SDL_WarpMouse(cursor_position[0], cursor_position[1]);
+	SDL_WarpMouse(cursor_position[X], cursor_position[Y]);
 
 	++frame_cnt;
 

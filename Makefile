@@ -14,5 +14,5 @@ OBJS  = example.o src/psp_jmouse.o
 
 include $(PSPSDK)/lib/build.mak
 
-src/psp_jmouse.o:
+src/psp_jmouse.o: src/psp_jmouse.c src/psp_jmouse.h
 	@$(MAKE) -C src
